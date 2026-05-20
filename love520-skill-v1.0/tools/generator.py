@@ -1,5 +1,5 @@
 """
-520表白技能 - HTML生成器模块 - 超级炫酷版
+520表白技能 - HTML生成器模块 - 超级炫酷版 v2.0
 """
 import os
 import webbrowser
@@ -67,12 +67,14 @@ class Love520Generator:
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       padding: 20px;
+      padding-top: 5vh;
+      overflow-y: auto;
     }}
 
     .title {{
-      font-size: 4rem;
+      font-size: clamp(2rem, 6vw, 5rem);
       background: linear-gradient(135deg, {self.config.primary_color}, {self.config.accent_color}, {self.config.secondary_color}, {self.config.primary_color});
       background-size: 300% 300%;
       -webkit-background-clip: text;
@@ -81,6 +83,8 @@ class Love520Generator:
       animation: titlePulse 2s ease-in-out infinite, gradientText 5s ease infinite;
       text-align: center;
       font-weight: bold;
+      max-width: 95vw;
+      word-wrap: break-word;
     }}
 
     @keyframes titlePulse {{
@@ -95,7 +99,7 @@ class Love520Generator:
     }}
 
     .subtitle {{
-      font-size: 1.5rem;
+      font-size: clamp(1rem, 3vw, 1.8rem);
       background: linear-gradient(90deg, {self.config.accent_color}, #fff, {self.config.accent_color});
       background-size: 200% 200%;
       -webkit-background-clip: text;
@@ -103,6 +107,8 @@ class Love520Generator:
       -webkit-text-fill-color: transparent;
       margin-bottom: 40px;
       animation: fadeInUp 1s ease-out 0.5s both, gradientSubtitle 3s ease infinite;
+      max-width: 95vw;
+      text-align: center;
     }}
 
     @keyframes gradientSubtitle {{
@@ -118,11 +124,11 @@ class Love520Generator:
 
     .love-container {{
       position: relative;
-      margin: 40px 0;
+      margin: clamp(20px, 4vw, 60px) 0;
     }}
 
     .big-heart {{
-      font-size: 8rem;
+      font-size: clamp(4rem, 12vw, 10rem);
       animation: heartbeat 0.8s ease-in-out infinite, heartGlow 2s ease-in-out infinite;
       filter: drop-shadow(0 0 30px {self.config.secondary_color});
     }}
@@ -146,11 +152,13 @@ class Love520Generator:
       border: 3px solid;
       border-image: linear-gradient(135deg, {self.config.primary_color}, {self.config.accent_color}, {self.config.secondary_color}) 1;
       border-radius: 25px;
-      padding: 35px;
-      max-width: 600px;
+      padding: clamp(20px, 4vw, 45px);
+      width: clamp(300px, 90vw, 700px);
+      max-width: 95vw;
       text-align: center;
       animation: fadeInUp 1s ease-out 1s both, boxGlow 3s ease-in-out infinite;
       box-shadow: 0 0 40px {self.config.primary_color}40;
+      overflow: hidden;
     }}
 
     @keyframes boxGlow {{
@@ -159,8 +167,8 @@ class Love520Generator:
     }}
 
     .love-message {{
-      font-size: 1.5rem;
-      line-height: 2;
+      font-size: clamp(1rem, 2.5vw, 1.8rem);
+      line-height: clamp(1.5, 2.5vw, 2.5);
     }}
 
     .love-message .normal {{
@@ -185,7 +193,7 @@ class Love520Generator:
       background-clip: text;
       -webkit-text-fill-color: transparent;
       font-weight: bold;
-      font-size: 1.8rem;
+      font-size: clamp(1.2rem, 3vw, 2.2rem);
       animation: gradientHighlight 2s ease infinite;
     }}
 
@@ -197,14 +205,16 @@ class Love520Generator:
 
     .buttons {{
       display: flex;
-      gap: 20px;
-      margin-top: 40px;
+      gap: clamp(15px, 4vw, 40px);
+      margin-top: clamp(20px, 4vw, 50px);
       animation: fadeInUp 1s ease-out 1.5s both;
+      flex-wrap: wrap;
+      justify-content: center;
     }}
 
     .btn {{
-      padding: 18px 50px;
-      font-size: 1.3rem;
+      padding: clamp(12px, 2vw, 22px) clamp(30px, 5vw, 60px);
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
       border: none;
       border-radius: 50px;
       cursor: pointer;
@@ -212,6 +222,7 @@ class Love520Generator:
       font-weight: bold;
       position: relative;
       overflow: hidden;
+      white-space: nowrap;
     }}
 
     .btn::before {{
@@ -249,12 +260,84 @@ class Love520Generator:
     }}
 
     .btn-no {{
-      background: linear-gradient(135deg, #555, #333);
+      background: linear-gradient(135deg, #667eea, #764ba2);
       color: white;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+      box-shadow: 0 5px 20px rgba(118, 75, 162, 0.5);
       white-space: nowrap;
-      position: absolute;
+      position: relative;
       transition: all 0.05s ease;
+    }}
+
+    .btn-no.flying {{
+      pointer-events: none;
+      animation: flyAway 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }}
+
+    @keyframes flyAway {{
+      0% {{ opacity: 1; transform: scale(1) rotate(0deg); filter: blur(0px); }}
+      30% {{ opacity: 1; transform: scale(1.2) rotate(-10deg); filter: blur(0px); }}
+      60% {{ opacity: 0.8; transform: scale(0.8) rotate(15deg) translateX(300px) translateY(-200px); filter: blur(2px); }}
+      100% {{ opacity: 0; transform: scale(0.1) rotate(360deg) translateX(800px) translateY(-600px); filter: blur(10px); }}
+    }}
+
+    .btn-no.pop {{
+      pointer-events: none;
+      animation: popBubble 0.8s ease-out forwards;
+    }}
+
+    @keyframes popBubble {{
+      0% {{ transform: scale(1); opacity: 1; filter: blur(0px); }}
+      20% {{ transform: scale(1.5); opacity: 0.9; filter: blur(0px); }}
+      100% {{ transform: scale(0); opacity: 0; filter: blur(20px); }}
+    }}
+
+    .shooting-star {{
+      position: fixed;
+      width: 4px;
+      height: 4px;
+      background: linear-gradient(45deg, #ffd700, #ff6b9d);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      animation: shootingStar 1s linear forwards;
+      box-shadow: 0 0 10px #ffd700, 0 0 20px #ff6b9d, 0 0 30px #ffd700;
+    }}
+
+    @keyframes shootingStar {{
+      0% {{ opacity: 1; transform: translate(0, 0) scale(1); }}
+      100% {{ opacity: 0; transform: translate(800px, -600px) scale(0); }}
+    }}
+
+    .bubble-particle {{
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      animation: bubbleFloat 1.5s ease-out forwards;
+    }}
+
+    @keyframes bubbleFloat {{
+      0% {{ opacity: 1; transform: scale(1) translate(0, 0); }}
+      100% {{ opacity: 0; transform: scale(0) translate(var(--tx), var(--ty)); }}
+    }}
+
+    .btn-no-hint {{
+      position: fixed;
+      font-size: 1rem;
+      color: #ffd700;
+      pointer-events: none;
+      z-index: 9998;
+      animation: hintFloat 2s ease-out forwards;
+      text-shadow: 0 0 10px #ffd700, 0 0 20px #ff6b9d;
+    }}
+
+    @keyframes hintFloat {{
+      0% {{ opacity: 0; transform: translateY(0) scale(0.5); }}
+      20% {{ opacity: 1; transform: translateY(-10px) scale(1); }}
+      80% {{ opacity: 1; }}
+      100% {{ opacity: 0; transform: translateY(-100px) scale(0.5); }}
     }}
 
     .floating-hearts {{
@@ -281,36 +364,6 @@ class Love520Generator:
       100% {{ opacity: 0; transform: translateY(-150px) rotate(720deg) scale(1.2); }}
     }}
 
-    .code-display {{
-      background: linear-gradient(135deg, rgba(0,0,0,0.4), rgba(0,0,0,0.2));
-      padding: 25px;
-      border-radius: 15px;
-      margin-top: 30px;
-      font-family: 'Courier New', monospace;
-      text-align: left;
-      max-width: 500px;
-      animation: fadeInUp 1s ease-out 2s both;
-      border: 1px solid rgba(255,255,255,0.1);
-    }}
-
-    .code-line {{
-      color: #0f0;
-      margin: 5px 0;
-      font-size: 0.9rem;
-    }}
-
-    .code-keyword {{
-      color: {self.config.primary_color};
-    }}
-
-    .code-string {{
-      color: {self.config.accent_color};
-    }}
-
-    .code-comment {{
-      color: #888;
-    }}
-
     /* ====== 效果页面样式 ====== */
     .effect-overlay {{
       position: fixed;
@@ -318,7 +371,7 @@ class Love520Generator:
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.95);
+      background: rgba(0,0,0,0.98);
       z-index: 2000;
       display: none;
       flex-direction: column;
@@ -350,21 +403,48 @@ class Love520Generator:
       z-index: 2;
       text-align: center;
       color: {self.config.primary_color};
+      animation: journeyFadeIn 1s ease-out;
+    }}
+
+    @keyframes journeyFadeIn {{
+      from {{ opacity: 0; transform: translateY(50px) scale(0.9); }}
+      to {{ opacity: 1; transform: translateY(0) scale(1); }}
     }}
 
     .journey-title {{
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-      animation: fadeInUp 1s ease-out;
+      font-size: clamp(1.8rem, 5vw, 3.5rem);
+      margin-bottom: clamp(15px, 3vw, 40px);
+      background: linear-gradient(135deg, {self.config.primary_color}, {self.config.accent_color});
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: titlePulse 2s ease-in-out infinite, gradientText 3s ease infinite;
+      max-width: 95vw;
+      text-align: center;
+      word-wrap: break-word;
     }}
 
     .journey-content {{
-      font-size: 1.2rem;
+      font-size: clamp(0.8rem, 2vw, 1.5rem);
       font-family: 'Courier New', monospace;
-      line-height: 1.5;
+      line-height: clamp(1.4, 2vw, 2);
       white-space: pre;
       color: {self.config.accent_color};
-      animation: matrixGlow 2s ease infinite;
+      animation: matrixGlow 2s ease infinite, contentTyping 0.05s steps(40) both;
+      overflow: hidden;
+      max-height: 0;
+      max-width: 95vw;
+      overflow-x: auto;
+    }}
+
+    .journey-content.show {{
+      max-height: none;
+      overflow-y: auto;
+    }}
+
+    @keyframes contentTyping {{
+      from {{ opacity: 0; }}
+      to {{ opacity: 1; }}
     }}
 
     @keyframes matrixGlow {{
@@ -373,21 +453,50 @@ class Love520Generator:
     }}
 
     .journey-progress {{
-      margin-top: 30px;
-      font-size: 1rem;
+      margin-top: 40px;
+      font-size: 1.2rem;
       color: #888;
     }}
 
-    .more-romantic-btn {{
+    .progress-bar {{
+      width: 300px;
+      height: 8px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 4px;
+      margin: 20px auto;
+      overflow: hidden;
+    }}
+
+    .progress-fill {{
+      height: 100%;
+      background: linear-gradient(90deg, {self.config.primary_color}, {self.config.accent_color}, {self.config.secondary_color});
+      border-radius: 4px;
+      width: 0%;
+      transition: width 1s ease-out;
+    }}
+
+    .journey-hint {{
+      margin-top: 20px;
+      font-size: 1rem;
+      color: #666;
+      animation: pulseHint 2s ease-in-out infinite;
+    }}
+
+    @keyframes pulseHint {{
+      0%, 100% {{ opacity: 0.5; }}
+      50% {{ opacity: 1; }}
+    }}
+
+    .final-message {{
       margin-top: 40px;
-      padding: 15px 40px;
-      font-size: 1.2rem;
-      background: linear-gradient(135deg, {self.config.primary_color}, {self.config.secondary_color});
-      color: white;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      animation: yesPulse 2s ease-in-out infinite;
+      font-size: 2rem;
+      color: {self.config.primary_color};
+      animation: finalPulse 1s ease-in-out infinite;
+    }}
+
+    @keyframes finalPulse {{
+      0%, 100% {{ transform: scale(1); }}
+      50% {{ transform: scale(1.05); }}
     }}
 
     .btn-no-escape {{
@@ -404,12 +513,12 @@ class Love520Generator:
     }}
 
     @media (max-width: 768px) {{
-      .title {{ font-size: 2.5rem; }}
-      .subtitle {{ font-size: 1.2rem; }}
-      .big-heart {{ font-size: 5rem; }}
-      .love-message {{ font-size: 1.2rem; }}
-      .buttons {{ flex-direction: column; align-items: center; }}
-      .journey-content {{ font-size: 0.8rem; }}
+      .content {{
+        padding: 10px;
+      }}
+      .love-journey {{
+        padding: 10px;
+      }}
     }}
   &lt;/style&gt;
 &lt;/head&gt;
@@ -434,10 +543,6 @@ class Love520Generator:
       &lt;/p&gt;
     &lt;/div&gt;
 
-    &lt;div class="code-display"&gt;
-      {self._format_code_block(self.config.code_block)}
-    &lt;/div&gt;
-
     &lt;div class="buttons"&gt;
       &lt;button class="btn btn-yes" onclick="startLoveEffect()"&gt;{self.config.yes_button_text}&lt;/button&gt;
       &lt;button class="btn btn-no" id="btn-no"&gt;{self.config.no_button_text}&lt;/button&gt;
@@ -449,9 +554,13 @@ class Love520Generator:
     &lt;canvas class="canvas-effect" id="effect-canvas"&gt;&lt;/canvas&gt;
     &lt;div class="love-journey" id="love-journey"&gt;
       &lt;div class="journey-title" id="journey-title"&gt;🎉 恭喜你做出了选择！&lt;/div&gt;
-      &lt;div class="journey-content" id="journey-content"&gt;正在加载爱的旅程...&lt;/div&gt;
+      &lt;div class="journey-content show" id="journey-content"&gt;正在加载爱的旅程...&lt;/div&gt;
       &lt;div class="journey-progress" id="journey-progress"&gt;步骤 1/4&lt;/div&gt;
-      &lt;button class="more-romantic-btn" id="more-btn" style="display:none;" onclick="showNextPhase()"&gt;✨ 还有更浪漫的 ✨&lt;/button&gt;
+      &lt;div class="progress-bar"&gt;
+        &lt;div class="progress-fill" id="progress-fill"&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="journey-hint" id="journey-hint"&gt;✨ 接下来会自动播放，请不要走开哦~&lt;/div&gt;
+      &lt;div class="final-message" id="final-message" style="display: none;"&gt;💝 我们的故事才刚刚开始...&lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 
@@ -563,79 +672,145 @@ class Love520Generator:
 
     setInterval(createFloatingHeart, 300);
 
-    // ====== 爱心逃跑按钮 ======
+    // ====== 爱心逃跑按钮 - 流星飞走效果 ======
     const noTexts = [
       '{self.config.no_button_text}',
-      '不要嘛~',
-      '人家不想',
-      '求求你了',
-      '不要这么无情',
-      '再考虑一下',
-      '我会伤心的',
-      '不要走~',
-      '别这样对我',
-      '给个机会',
-      '好不好嘛',
-      '呜呜呜',
-      '人家很乖的',
-      '再想想嘛',
-      '求你了求你了'
+      '🌠 再想想嘛~',
+      '💫 别追我呀',
+      '✨ 人家要飞走啦',
+      '🌙 飞向月亮去',
+      '⭐ 变成星星了',
+      '🌈 彩虹来接我了',
+      '🎆 烟花带走了我',
+      '💭 你追不上我的',
+      '🚀 火箭发射！',
+      '🛸 UFO带我走',
+      '🌸 花瓣雨带我去远方',
+      '💖 变成爱心飞走啦',
+      '🎈 气球带我飘走',
+      '🌺 飞向花丛中',
+      '💝 化作流星消失~',
+      '🎠 转着圈圈飞走~',
+      '🌊 随波逐流飘走',
+      '🍃 乘着风飞走',
+      '🌤️ 追着云彩去',
+      '🎭 变身术！看不见我~'
     ];
 
-    let moveCount = 0;
     let btnNo = document.getElementById('btn-no');
-    let originalRect = null;
-    let noInterval = null;
+    let isFlying = false;
+    let clickCount = 0;
 
-    function moveNoButton(e) {{
-      if (!originalRect) {{
-        originalRect = btnNo.getBoundingClientRect();
-      }}
-      
-      moveCount++;
-      const textIndex = Math.min(moveCount, noTexts.length - 1);
-      btnNo.textContent = noTexts[textIndex];
-      
-      const maxMove = Math.min(400, moveCount * 80);
-      const tx = (Math.random() - 0.5) * maxMove;
-      const ty = (Math.random() - 0.5) * maxMove;
-      
-      btnNo.style.position = 'fixed';
-      btnNo.style.zIndex = '100';
-      btnNo.style.left = (originalRect.left + tx) + 'px';
-      btnNo.style.top = (originalRect.top + ty) + 'px';
-      
-      if (moveCount > 8) {{
-        btnNo.style.fontSize = (1.3 - moveCount * 0.08) + 'rem';
-      }}
-      
-      if (moveCount > 15) {{
-        btnNo.style.display = 'none';
-        clearInterval(noInterval);
+    function createShootingStars(x, y) {{
+      for (let i = 0; i < 15; i++) {{
+        setTimeout(() => {{
+          const star = document.createElement('div');
+          star.className = 'shooting-star';
+          star.style.left = (x + Math.random() * 100 - 50) + 'px';
+          star.style.top = (y + Math.random() * 100 - 50) + 'px';
+          document.body.appendChild(star);
+          setTimeout(() => star.remove(), 1000);
+        }}, i * 30);
       }}
     }}
 
+    function createBubbleParticles(x, y) {{
+      const colors = ['#ff6b9d', '#ffd700', '#ff1493', '#ff69b4', '#764ba2'];
+      for (let i = 0; i < 12; i++) {{
+        const particle = document.createElement('div');
+        particle.className = 'bubble-particle';
+        particle.style.left = x + 'px';
+        particle.style.top = y + 'px';
+        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+        particle.style.setProperty('--tx', (Math.random() * 200 - 100) + 'px');
+        particle.style.setProperty('--ty', (Math.random() * 200 - 100) + 'px');
+        particle.style.opacity = Math.random() * 0.8 + 0.2;
+        document.body.appendChild(particle);
+        setTimeout(() => particle.remove(), 1500);
+      }}
+    }}
+
+    function showHint(x, y, text) {{
+      const hint = document.createElement('div');
+      hint.className = 'btn-no-hint';
+      hint.textContent = text;
+      hint.style.left = (x + 20) + 'px';
+      hint.style.top = (y - 30) + 'px';
+      document.body.appendChild(hint);
+      setTimeout(() => hint.remove(), 2000);
+    }}
+
+    function escapeButton(e) {{
+      if (isFlying) return;
+      
+      isFlying = true;
+      clickCount++;
+      const textIndex = Math.min(clickCount, noTexts.length - 1);
+      const randomText = noTexts[textIndex];
+      
+      btnNo.textContent = randomText;
+      
+      const rect = btnNo.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+      
+      const effectType = Math.floor(Math.random() * 3);
+      
+      if (effectType === 0) {{
+        btnNo.classList.add('flying');
+        createShootingStars(x, y);
+        
+        setTimeout(() => {{
+          btnNo.style.display = 'none';
+          isFlying = false;
+        }}, 1500);
+        
+      }} else if (effectType === 1) {{
+        btnNo.classList.add('pop');
+        createBubbleParticles(x, y);
+        
+        setTimeout(() => {{
+          btnNo.style.display = 'none';
+          isFlying = false;
+        }}, 800);
+        
+      }} else {{
+        btnNo.classList.add('flying');
+        createShootingStars(x, y);
+        
+        setTimeout(() => {{
+          btnNo.classList.remove('flying');
+          btnNo.classList.add('pop');
+          createBubbleParticles(x, y);
+        }}, 900);
+        
+        setTimeout(() => {{
+          btnNo.style.display = 'none';
+          isFlying = false;
+        }}, 1700);
+      }}
+      
+      setTimeout(() => {{
+        showHint(x, y, randomText);
+      }}, 200);
+    }}
+
     btnNo.addEventListener('mouseenter', () => {{
-      if (moveCount &lt; 15) {{
-        noInterval = setInterval(() => {{
-          if (moveCount &lt; 15) moveNoButton();
-        }}, 50);
+      if (!isFlying && btnNo.style.display !== 'none') {{
+        escapeButton();
       }}
     }});
 
-    btnNo.addEventListener('mouseleave', () => {{
-      clearInterval(noInterval);
-    }});
-
     document.addEventListener('mousemove', function(e) {{
-      if (moveCount &gt; 0 && moveCount &lt;= 15) {{
-        const rect = btnNo.getBoundingClientRect();
-        const dx = e.clientX - (rect.left + rect.width / 2);
-        const dy = e.clientY - (rect.top + rect.height / 2);
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist &lt; 150) {{
-          moveNoButton();
-        }}
+      if (isFlying || btnNo.style.display === 'none') return;
+      
+      const rect = btnNo.getBoundingClientRect();
+      const dx = e.clientX - (rect.left + rect.width / 2);
+      const dy = e.clientY - (rect.top + rect.height / 2);
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      
+      if (dist < 100) {{
+        escapeButton();
       }}
     }});
 
@@ -683,7 +858,7 @@ class Love520Generator:
         const texts = ['求求你别点我', '我真的会消失', '呜呜呜别追我', '求求了求求了', '我会消失的', '最后警告', '真的要没了', '再追就没了'];
         escapeBtn.textContent = texts[Math.min(escapeCount, texts.length - 1)];
         
-        if (escapeCount > 25) {{
+        if (escapeCount &gt; 25) {{
           escapeBtn.style.display = 'none';
           clearInterval(escapeInterval);
         }}
@@ -699,16 +874,16 @@ class Love520Generator:
         this.particles = [];
         this.life = 1;
         
-        for (let i = 0; i &lt; 50; i++) {{
-          const angle = (Math.PI * 2 * i) / 50;
-          const speed = Math.random() * 5 + 3;
+        for (let i = 0; i &lt; 80; i++) {{
+          const angle = (Math.PI * 2 * i) / 80;
+          const speed = Math.random() * 8 + 4;
           this.particles.push({{
             x: this.x,
             y: this.y,
             vx: Math.cos(angle) * speed,
             vy: Math.sin(angle) * speed,
             life: 1,
-            size: Math.random() * 3 + 1
+            size: Math.random() * 4 + 2
           }});
         }}
       }}
@@ -717,10 +892,10 @@ class Love520Generator:
         this.particles.forEach(p => {{
           p.x += p.vx;
           p.y += p.vy;
-          p.vy += 0.1;
-          p.life -= 0.02;
+          p.vy += 0.08;
+          p.life -= 0.015;
         }});
-        this.life -= 0.02;
+        this.life -= 0.015;
       }}
 
       draw(ctx) {{
@@ -799,19 +974,20 @@ class Love520Generator:
     let currentPhase = 0;
     let fireworks = [];
     let effectAnimationId = null;
+    let fireworkInterval = null;
 
     // ====== 开始爱心效果 ======
     function startLoveEffect() {{
       const overlay = document.getElementById('effect-overlay');
       overlay.style.display = 'flex';
       
-      // 创建爱心和烟花
-      setInterval(() => {{
+      // 创建烟花
+      fireworkInterval = setInterval(() => {{
         const x = Math.random() * effectCanvas.width;
-        const y = Math.random() * effectCanvas.height;
+        const y = Math.random() * (effectCanvas.height * 0.6);
         const colors = ['{self.config.primary_color}', '{self.config.secondary_color}', '{self.config.accent_color}', '#ff1493', '#ffd700'];
         fireworks.push(new Firework(x, y, colors[Math.floor(Math.random() * colors.length)]));
-      }}, 200);
+      }}, 400);
 
       // 动画循环
       function effectAnimate() {{
@@ -828,49 +1004,66 @@ class Love520Generator:
       }}
       effectAnimate();
 
-      // 显示第一阶段
-      setTimeout(() => {{
-        showPhase(0);
-      }}, 2000);
+      // 开始自动播放旅程
+      currentPhase = 0;
+      showPhase(0);
+      
+      setTimeout(() => autoPlayJourney(), 3000);
     }}
 
     function showPhase(index) {{
       currentPhase = index;
       const phase = lovePhases[index];
+      const journeyContent = document.getElementById('journey-content');
       
-      document.getElementById('journey-title').textContent = phase.title;
-      document.getElementById('journey-content').textContent = phase.content;
-      document.getElementById('journey-progress').textContent = `步骤 ${{index + 1}}/${{lovePhases.length}}`;
+      // 隐藏内容准备更新
+      journeyContent.classList.remove('show');
       
-      const moreBtn = document.getElementById('more-btn');
-      if (index &lt; lovePhases.length - 1) {{
-        moreBtn.style.display = 'block';
-        moreBtn.textContent = '✨ 还有更浪漫的 →';
-      }} else {{
-        moreBtn.style.display = 'block';
-        moreBtn.textContent = '💝 探索我们的未来 💝';
-      }}
+      setTimeout(() => {{
+        document.getElementById('journey-title').textContent = phase.title;
+        journeyContent.textContent = phase.content;
+        journeyContent.classList.add('show');
+        document.getElementById('journey-progress').textContent = `步骤 ${{index + 1}}/${{lovePhases.length}}`;
+        
+        // 更新进度条
+        const progressPercent = ((index + 1) / lovePhases.length) * 100;
+        document.getElementById('progress-fill').style.width = progressPercent + '%';
+      }}, 100);
     }}
 
-    function showNextPhase() {{
+    function autoPlayJourney() {{
       if (currentPhase &lt; lovePhases.length - 1) {{
         currentPhase++;
         showPhase(currentPhase);
         
         // 每个阶段都有烟花
-        for (let i = 0; i &lt; 10; i++) {{
+        for (let i = 0; i &lt; 15; i++) {{
           setTimeout(() => {{
             const x = Math.random() * effectCanvas.width;
-            const y = Math.random() * effectCanvas.height;
+            const y = Math.random() * (effectCanvas.height * 0.6);
             const colors = ['{self.config.primary_color}', '{self.config.secondary_color}', '{self.config.accent_color}'];
             fireworks.push(new Firework(x, y, colors[Math.floor(Math.random() * colors.length)]));
-          }}, i * 100);
+          }}, i * 200);
         }}
+        
+        // 4秒后播放下一阶段
+        setTimeout(autoPlayJourney, 5000);
       }} else {{
-        // 最后一个阶段 - 创建逃跑按钮
-        createEscapeButton();
-        document.getElementById('more-btn').style.display = 'none';
-        document.getElementById('journey-progress').textContent = '🎊 未来已来，让我们一起变老 💑';
+        // 最后一个阶段 - 显示最终消息
+        document.getElementById('journey-hint').style.display = 'none';
+        document.getElementById('journey-progress').style.display = 'none';
+        document.getElementById('final-message').style.display = 'block';
+        
+        // 继续放更多烟花
+        clearInterval(fireworkInterval);
+        fireworkInterval = setInterval(() => {{
+          const x = Math.random() * effectCanvas.width;
+          const y = Math.random() * (effectCanvas.height * 0.5);
+          const colors = ['{self.config.primary_color}', '{self.config.secondary_color}', '{self.config.accent_color}', '#ff69b4', '#ff1493', '#ffd700'];
+          fireworks.push(new Firework(x, y, colors[Math.floor(Math.random() * colors.length)]));
+        }}, 300);
+        
+        setTimeout(createEscapeButton, 2000);
       }}
     }}
 
