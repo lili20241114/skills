@@ -1,0 +1,142 @@
+
+{
+  "name": "love520-skill",
+  "version": "1.0.0",
+  "description": "520浪漫表白技能 - 一个可自定义配置的浪漫表白页面生成器",
+  "author": "520表白团队",
+  "license": "MIT",
+  "tags": ["表白", "情人节", "520", "浪漫", "HTML", "动画"],
+  "category": "creative",
+  "entry": "tools/main.py",
+  "tools": [
+    {
+      "name": "generate",
+      "description": "生成表白页面",
+      "input": {
+        "type": "object",
+        "properties": {
+          "config": {
+            "oneOf": [
+              {
+                "type": "string",
+                "enum": ["default", "classic", "programmer", "eternal"],
+                "description": "使用预设模板"
+              },
+              {
+                "type": "object",
+                "description": "自定义配置对象",
+                "properties": {
+                  "title": { "type": "string", "description": "主标题" },
+                  "subtitle": { "type": "string", "description": "副标题" },
+                  "love_message": { "type": "string", "description": "表白语" },
+                  "highlight_text": { "type": "string", "description": "高亮文字" },
+                  "yes_button_text": { "type": "string", "description": "\"我愿意\"按钮文字" },
+                  "no_button_text": { "type": "string", "description": "\"再想想\"按钮文字" },
+                  "success_title": { "type": "string", "description": "成功弹窗标题" },
+                  "success_message": { "type": "string", "description": "成功弹窗内容" },
+                  "code_block": { "type": "string", "description": "代码块内容" },
+                  "primary_color": { "type": "string", "description": "主色调" },
+                  "secondary_color": { "type": "string", "description": "次色调" },
+                  "accent_color": { "type": "string", "description": "强调色" },
+                  "background_color": { "type": "string", "description": "背景色" },
+                  "particle_count": { "type": "number", "description": "粒子数量" },
+                  "show_particles": { "type": "boolean", "description": "是否显示粒子" },
+                  "show_hearts": { "type": "boolean", "description": "是否显示浮动爱心" }
+                }
+              }
+            ],
+            "description": "配置对象或预设名称",
+            "default": "default"
+          }
+        },
+        "required": ["config"]
+      },
+      "output": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "html_path": { "type": "string" },
+          "message": { "type": "string" }
+        }
+      }
+    },
+    {
+      "name": "open_preview",
+      "description": "在浏览器中预览生成的页面",
+      "input": {
+        "type": "object",
+        "properties": {
+          "html_path": {
+            "type": "string",
+            "description": "HTML文件路径（可选）"
+          }
+        }
+      },
+      "output": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "message": { "type": "string" }
+        }
+      }
+    },
+    {
+      "name": "save_config",
+      "description": "保存配置",
+      "input": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "配置名称"
+          },
+          "config": {
+            "type": "object",
+            "description": "配置对象"
+          }
+        },
+        "required": ["name", "config"]
+      },
+      "output": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "config_path": { "type": "string" }
+        }
+      }
+    },
+    {
+      "name": "load_config",
+      "description": "加载已保存的配置",
+      "input": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "配置名称"
+          }
+        },
+        "required": ["name"]
+      },
+      "output": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "config": { "type": "object" }
+        }
+      }
+    },
+    {
+      "name": "list_configs",
+      "description": "列出所有已保存的配置",
+      "input": {},
+      "output": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "configs": { "type": "array" }
+        }
+      }
+    }
+  ]
+}
